@@ -2,29 +2,27 @@ const bcrypt = require("bcrypt");
 
 const usuarioModel = require("../model/UsuarioModel");
 
-const criarUsuario = async(req, res) => {
+const criarUsuario = async (req, res) => {
     try {
-        const {
-            nome, 
-            login,
-            senha
-        } = req.body;
-        
+        const { nome, login, senha } = req.body;
+
         const senhaSecreta = await bcrypt.hash(senha);
 
-        await usuarioModel.criarUsuario (
+        await usuarioModel.criarUsuario(
             nome,
             login,
             senhaSecreta
         );
 
         res.status(201).json({
-            mensagem:"Usuário criado com sucesso!"
+            mensagem: "Usuário criado com sucesso!"
         })
 
     } catch (erro) {
+
         res.status(502).json({
-            mensagem:"Erro ao cadastrar o usuário!"
+            mensagem: "Erro ao cadastrar usuário!"
         })
     }
 }
+
